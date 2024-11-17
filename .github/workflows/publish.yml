@@ -24,14 +24,35 @@ jobs:
       - run: echo "Este trabajo está corriendo ahora sobre un servidor ${{ runner.os }} alojado en GitHub."
       - run: echo "El nombre de tu rama es ${{ github.ref }}, y tu repositorio es ${{ github.repository }}."
 
-      - name: checkout repository code
+      - name: 'checkout repository code'
         uses: actions/checkout@v4
 
-      - run: echo "El repositorio ${{ github.repository }} ah sido clonado al entorno de ejecución."
+      - run: echo "El repositorio ${{ github.repository }} ha sido clonado al entorno de ejecución."
       - run: echo "El worflow está ahora preparado para testear tu código en el entorno de ejecución."
-      - name: Lista de archivos en el respositorio
+      - name: 'Lista de archivos en el respositorio'
         run: |
           ls ${{ github.workspace }}
+          echo "Archivos listados correctamente"
       - run: echo "El estado de este trabajo es ${{ job.status }}."
       - name: 'Muestra archivos del directorio con checkout'
         run: ls -la
+
+  test:
+    runs on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Configurar Phyton'
+        uses: actions/setup-phyton@v4
+      - name: 'Instalar dependencias'
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: 'Lint with Ruff (usar la herrmienta Ruff)'
+        run: |
+          pip install ruff
+          ruff check .
+        continue-on-error: true
+      - name: 'Test con pytest'
+        run: coverage run -m pytest -v -s
+      - name: 'Generar Coverage Report'
+        run: coverage report -m --omit="/usr/*"

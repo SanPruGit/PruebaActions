@@ -30,7 +30,7 @@ jobs:
       - run: echo "El repositorio ${{ github.repository }} ah sido clonado al entorno de ejecución."
       - run: echo "El worflow está ahora preparado para testear tu código en el entorno de ejecución."
       - name: Lista de archivos en el respositorio
-      - run: |
+        run: |
           ls ${{ github.workspace }}
       - run: echo "El estado de este trabajo es ${{ job.status }}."
       - name: 'Muestra archivos del directorio con checkout'

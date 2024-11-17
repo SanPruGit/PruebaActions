@@ -15,3 +15,25 @@ jobs:
         run: date
       - name: 'Muestra archivos directorio sin checkout'
         run: ls -la
+
+  basic_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Mi username'
+       run: echo ${{ github.actor }}
+      - run: echo "El trabajo fue lanzado automaticamente por un evento ${{ github.event_name }}."
+      - run: echo "Este trabajo está corriendo ahora sobre un servidor ${{ runner.os }} alojado en GitHub."
+      - run: echo "El nombre de tu rama es ${{ github.ref }}, y tu repositorio es ${{ github.repository }}."
+
+      - name: checkout repository code
+        uses: actions/checkout@v4
+
+      - run: echo "El repositorio ${{ github.repository }} ah sido clonado al entorno de ejecución."
+      - run: echo "El worflow está ahora preparado para testear tu código en el entorno de ejecución."
+      - name: Lista de archivos en el respositorio
+      - run: |
+          ls ${{ github.workspace }}
+      - run: echo "El estado de este trabajo es ${{ job.status }}."
+      - name: 'Muestra archivos del directorio con checkout'
+        run: ls -la

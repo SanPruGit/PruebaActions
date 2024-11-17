@@ -41,8 +41,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: 'Configurar Phyton'
-        uses: actions/setup-phyton@v4
+      - name: 'Configurar Python'
+        uses: actions/setup-python@v4
       - name: 'Instalar dependencias'
         run: |
           python -m pip install --upgrade pip
